@@ -54,3 +54,4 @@ dkms.conf
 #IDE files
 venv
 .idea
+__*
