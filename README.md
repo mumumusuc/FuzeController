@@ -8,7 +8,7 @@
     ----|-----|----
     0   |0x02 |ReportID
     1   |0x00 |Buttons<pre>0b:A<br>1b:B<br>2b:LT<br>3b:X<br>4b:Y<br>5b:RT<br>6b:LB<br>7b:RB</pre>
-    2   |0x00 |Buttons<pre>0b:FUZE(长按)<br>1b:-<br>2b:MENU<br>3b:VIEW<br>4b:FUZE<br>5b:L3<br>6b:R3<br>7b:-</pre>
+    2   |0x00 |Buttons<pre>0b:FUZE(hold)<br>1b:-<br>2b:MENU<br>3b:VIEW<br>4b:FUZE(release)<br>5b:L3<br>6b:R3<br>7b:-<br><br>* FUZE键长按约1s触发bit0,释放时触发bit4</pre>
     3   |0x0F |D-Pad(低4位)<pre>0:Up<br>1:Up-Right<br>2:Right<br>3:Down-Right<br>4:Down<br>5:Down-Left<br>6:Left<br>7:Up-Left<br>F:Idle</pre>
     4   |0x00~0xFF |Left stick X<pre>uint8<br>default=0x80</pre>
     5   |0x00~0xFF |Left stick Y<pre>uint8<br>default=0x80</pre>
@@ -43,14 +43,10 @@
     
 ```
 // python依赖
-# sudo apt install python3-pip
+# sudo apt install python3-pip python3-hidapi
 # pip3 install evdev
 
-// 确认hid设备
-# ls -al /dev/hidraw*
-> crw-rw----+ 1 root root 244, 2 5月  21 17:36 /dev/hidraw2
-
-# sudo python3 hidinput.py "/dev/hidraw2"
+# sudo python3 hidinput.py 
 ```
 
 ### Windows驱动

@@ -2,6 +2,7 @@
 
 import uinput
 import sys
+import hidapi
 from evdev import ecodes
 
 
@@ -68,14 +69,27 @@ def parse_input_report(dev, input):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        sys.stderr.write('Need hidraw path.\n Usage :\n sudo python3 hidinput.py \"/dev/hidraw*\"\n')
+    VID, PID = 0x0079, 0x181C
+    LEN, TIMEOUT = 10, 1000
+    devices = hidapi.enumerate(VID, PID)
+    try:
+        device = next(devices)
+    except StopIteration as e:
+        sys.stderr.write('Hid device(VID=%s,PID=%s) not found\n' % (VID, PID))
         exit(-1)
-    hid_path = sys.argv[1]
-    with open(hid_path, 'rb') as hid_dev:
-        print("open hidraw file : ", hid_path)
-        udev = uinput.create_uinput_device("xpad")
+    device = hidapi.Device(device)
+    print("ProductName\t: ", device.get_product_string(),
+          "\nManufacturer\t: ", device.get_manufacturer_string(),
+          "\nSerialNumber\t: ", device.get_serial_number_string(),
+          "\nVID =", hex(VID),
+          "\nPID =", hex(PID))
+    udev = uinput.create_uinput_device("xpad")
+    try:
         while True:
-            buf = hid_dev.read(10)
-            if buf[0] == 0x02:
+            buf = device.read(LEN, TIMEOUT)
+            if buf and buf[0] == 0x02:
                 parse_input_report(udev, buf)
+    except KeyboardInterrupt:
+        print('\nexit...')
+    finally:
+        device.close()
