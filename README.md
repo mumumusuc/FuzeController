@@ -17,9 +17,9 @@
     8   |0x00~0xFF |Left trigger<pre>uint8<br>default=0x00<br>threshold=0x40</pre>
     9   |0x00~0xFF |Right trigger<pre>uint8<br>default=0x00<br>threshold=0x40</pre>
 
-    *由@sentisk提供*
+    *由@[sentisk](https://github.com/sentisk)提供*
     
-    <dev>*上述表格并不完整，需要有设备的朋友帮助测试按键关系。*</dev>
+    <del>*上述表格并不完整，需要有设备的朋友帮助测试按键关系。*</del>
     >Linux下可以使用 
     <br>`# hexdump /dev/hidraw* | tee log.txt` 
     <br>或者[test.py](https://github.com/mumumusuc/FuzeController/blob/master/linux/test.py) 
