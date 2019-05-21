@@ -5,43 +5,24 @@ import time
 from evdev import UInput, UInputError, ecodes, util
 from collections import namedtuple
 
-absInfoUsesValue = hasattr(util, "resolve_ecodes_dict")
-DEFAULT_A2D_DEADZONE = 50
-DEFAULT_AXIS_OPTIONS = (0, 0, 255, 0, 5)
-DEFAULT_MOUSE_SENSITIVTY = 0.8
-DEFAULT_MOUSE_DEADZONE = 5
-DEFAULT_SCROLL_REPEAT_DELAY = .250  # Seconds to wait before continual scrolling
-DEFAULT_SCROLL_DELAY = .035  # Seconds to wait between scroll events
-BUTTON_MODIFIERS = ("+", "-")
 _mappings = {}
+absInfoUsesValue = hasattr(util, "resolve_ecodes_dict")
+DEFAULT_AXIS_OPTIONS = (0, 0, 255, 0, 5)
 UInputMapping = namedtuple("UInputMapping",
                            "name bustype vendor product version "
-                           "axes axes_options buttons hats keys mouse "
-                           "mouse_options")
-
-
-def parse_button(attr):
-    if attr[0] in BUTTON_MODIFIERS:
-        modifier = attr[0]
-        attr = attr[1:]
-    else:
-        modifier = None
-
-    return (attr, modifier)
+                           "axes axes_options buttons hats keys")
 
 
 def create_mapping(name, description, bustype=0, vendor=0, product=0,
                    version=0, axes={}, axes_options={}, buttons={},
-                   hats={}, keys={}, mouse={}, mouse_options={}):
+                   hats={}, keys={}):
     axes = {getattr(ecodes, k): v for k, v in axes.items()}
     axes_options = {getattr(ecodes, k): v for k, v in axes_options.items()}
-    buttons = {getattr(ecodes, k): parse_button(v) for k, v in buttons.items()}
+    buttons = {getattr(ecodes, k): v for k, v in buttons.items()}
     hats = {getattr(ecodes, k): v for k, v in hats.items()}
-    mouse = {getattr(ecodes, k): parse_button(v) for k, v in mouse.items()}
 
     mapping = UInputMapping(description, bustype, vendor, product, version,
-                            axes, axes_options, buttons, hats, keys, mouse,
-                            mouse_options)
+                            axes, axes_options, buttons, hats, keys)
     _mappings[name] = mapping
 
 
@@ -83,7 +64,6 @@ create_mapping(
 
 
 def next_joystick_device():
-    """Finds the next available js device name."""
     for i in range(100):
         dev = "/dev/input/js{0}".format(i)
         if not os.path.exists(dev):
@@ -102,7 +82,9 @@ def create_uinput_device(mapping):
 class UInputDevice(object):
     def __init__(self, layout):
         self.js_dev = None
-        self.evdev_dev = None
+        self.device = None
+        self.layout = None
+        self._cache = {}
         self.create_device(layout)
         self.reset()
 
@@ -122,42 +104,46 @@ class UInputDevice(object):
             if not absInfoUsesValue:
                 params = params[1:]
             events[ecodes.EV_ABS].append((name, params))
-        self.device = UInput(
-            name=layout.name,
-            events=events,
-            bustype=layout.bustype,
-            vendor=layout.vendor,
-            product=layout.product,
-            version=layout.version)
+        self.device = UInput(name=layout.name,
+                             events=events,
+                             bustype=layout.bustype,
+                             vendor=layout.vendor,
+                             product=layout.product,
+                             version=layout.version)
         self.layout = layout
-        print("create ", self.js_dev, self.device)
+        print("create joystick [%s]@%s" % (self.device.name, self.js_dev))
 
     def write_event(self, ev_type, code, value):
-        last_value = self._write_cache.get(code)
+        last_value = self._cache.get(code)
         if last_value != value:
             self.device.write(ev_type, code, value)
-            self._write_cache[code] = value
+            self._cache[code] = value
 
     def reset(self):
         pass
 
-    def emit_buttons(self, code, value):
-        # self.write_event(ecodes.EV_KEY, code, value)
-        pass
+    def emit_buttons(self, buttons):
+        for code, attr in self.layout.buttons.items():
+            value = buttons.get_value(code, attr)
+            self.write_event(ecodes.EV_KEY, code, value)
 
-    def emit_axes(self, code, value):
-        # self.write_event(ecodes.EV_ABS, code, value)
-        pass
+    def emit_axes(self, axes):
+        for code, attr in self.layout.axes.items():
+            value = axes.get_value(code, attr)
+            self.write_event(ecodes.EV_ABS, code, value)
 
-    def emit_hats(self):
-        # self.write_event(ecodes.EV_ABS, code, value)
-        pass
+    def emit_hats(self, hats):
+        for code, attr in self.layout.hats.items():
+            value = hats.get_value(code, attr)
+            self.write_event(ecodes.EV_ABS, code, value)
 
     def emit(self):
         self.device.syn()
 
 
 if __name__ == '__main__':
+    test = {ecodes.ABS_HAT0X: 8}
+    print('get value %s : ' % ecodes.ABS_HAT0X, test[ecodes.ABS_HAT0X])
     create_uinput_device("xpad")
     while True:
         time.sleep(1)
