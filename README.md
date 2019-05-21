@@ -6,18 +6,20 @@
 
     Byte|Value|Note
     ----|-----|----
-    0   |0x02 |ID
-    1   |0xFF |Buttons<pre>0b:?<br>1b:?<br>2b:?<br>3b:LT<br>4b:?<br>5b:?<br>6b:?<br>7b:?</pre>
-    2   |0x1F |Buttons<pre>0b:?<br>1b:?<br>2b:?<br>3b:?<br>4b:?</pre>
-    3   |0x0F? |D-Pad<pre>0:Up<br>1:Up-Right<br>2:Right<br>3:Down-Right<br>4:Down<br>5:Down-Left<br>6:Left<br>7:Up-Left<br>8:Idle</pre>
+    0   |0x02 |ReportID
+    1   |0x00 |Buttons<pre>0b:A<br>1b:B<br>2b:LT<br>3b:X<br>4b:Y<br>5b:RT<br>6b:LB<br>7b:RB</pre>
+    2   |0x00 |Buttons<pre>0b:FUZE(长按)<br>1b:-<br>2b:MENU<br>3b:VIEW<br>4b:FUZE<br>5b:L3<br>6b:R3<br>7b:-</pre>
+    3   |0x0F |D-Pad(低4位)<pre>0:Up<br>1:Up-Right<br>2:Right<br>3:Down-Right<br>4:Down<br>5:Down-Left<br>6:Left<br>7:Up-Left<br>F:Idle</pre>
     4   |0x00~0xFF |Left stick X<pre>uint8<br>default=0x80</pre>
     5   |0x00~0xFF |Left stick Y<pre>uint8<br>default=0x80</pre>
     6   |0x00~0xFF |Right stick X<pre>uint8<br>default=0x80</pre>
     7   |0x00~0xFF |Right stick Y<pre>uint8<br>default=0x80</pre>
-    8   |0x00~0xFF |Left trigger<pre>uint8<br>default=0x00</pre>
-    9   |0x00~0xFF |Right trigger<pre>uint8<br>default=0x00</pre>
+    8   |0x00~0xFF |Left trigger<pre>uint8<br>default=0x00<br>threshold=0x40</pre>
+    9   |0x00~0xFF |Right trigger<pre>uint8<br>default=0x00<br>threshold=0x40</pre>
 
-    *上述表格并不完整，需要有设备的朋友帮助测试按键关系。*
+    *由@sentisk提供*
+    
+    <dev>*上述表格并不完整，需要有设备的朋友帮助测试按键关系。*</dev>
     >Linux下可以使用 
     <br>`# hexdump /dev/hidraw* | tee log.txt` 
     <br>或者[test.py](https://github.com/mumumusuc/FuzeController/blob/master/linux/test.py) 
