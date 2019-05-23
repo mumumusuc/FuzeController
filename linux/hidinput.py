@@ -5,13 +5,50 @@ import sys
 import hidapi
 from evdev import ecodes
 
+BTN_MASK_A = 0x0001  # BTN_A
+BTN_MASK_B = 0x0002  # BTN_B
+BTN_MASK_LT = 0x0004  #
+BTN_MASK_X = 0x0008  # BTN_X
+BTN_MASK_Y = 0x0010  # BTN_Y
+BTN_MASK_RT = 0x0020  #
+BTN_MASK_LB = 0x0040  # BTN_TL
+BTN_MASK_RB = 0x0080  # BTN_TR
+BTN_MASK_LOGO1 = 0x0100  #
+BTN_MASK_MENU = 0x0400  # BTN_START
+BTN_MASK_VIEW = 0x0800  # BTN_SELECT
+BTN_MASK_LOGO = 0x1000  # BTN_MODE
+BTN_MASK_L3 = 0x2000  # BTN_THUMBL
+BTN_MASK_R3 = 0x4000  # BTN_THUMBR
+
 
 class Js(object):
     def __init__(self, value):
         self.value = value
 
     def get_value(self, code, attr):
-        pass
+        if code == ecodes.BTN_A:
+            return 1 if self.value & BTN_MASK_A else 0
+        if code == ecodes.BTN_B:
+            return 1 if self.value & BTN_MASK_B else 0
+        if code == ecodes.BTN_X:
+            return 1 if self.value & BTN_MASK_X else 0
+        if code == ecodes.BTN_Y:
+            return 1 if self.value & BTN_MASK_Y else 0
+        if code == ecodes.BTN_MODE:
+            return 1 if self.value & BTN_MASK_LOGO else 0
+        if code == ecodes.BTN_SELECT:
+            return 1 if self.value & BTN_MASK_VIEW else 0
+        if code == ecodes.BTN_START:
+            return 1 if self.value & BTN_MASK_MENU else 0
+        if code == ecodes.BTN_TL:
+            return 1 if self.value & BTN_MASK_LB else 0
+        if code == ecodes.BTN_TR:
+            return 1 if self.value & BTN_MASK_RB else 0
+        if code == ecodes.BTN_THUMBL:
+            return 1 if self.value & BTN_MASK_L3 else 0
+        if code == ecodes.BTN_THUMBR:
+            return 1 if self.value & BTN_MASK_R3 else 0
+        return 0
 
 
 class Button(Js):

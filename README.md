@@ -19,13 +19,6 @@
 
     *由@[sentisk](https://github.com/sentisk)提供*
     
-    <del>*上述表格并不完整，需要有设备的朋友帮助测试按键关系。*</del>
-    >Linux下可以使用 
-    <br>`# hexdump /dev/hidraw* | tee log.txt` 
-    <br>或者[test.py](https://github.com/mumumusuc/FuzeController/blob/master/linux/test.py) 
-    <br>`# python3 test.py "/dev/hidraw*" | tee log.txt`
-    <br>观察每个按键“按下-松开”后的数值变化来确认手柄按键顺序,输出数据将记录在log.txt。
-    
 2. 震动数据(Output)
     
     > TBD
