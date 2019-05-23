@@ -42,3 +42,113 @@ root@yuki-virtual-machine:/home/yuki# cat /sys/bus/hid/devices/0005\:12D1\:A560.
 00000d0 ff26 0900 09c4 95c5 7502 8108 c002 0000
 00000df
 
+// update
+Usage Page (Desktop),               ; Generic desktop controls (01h)
+Usage (Keyboard),                   ; Keyboard (06h, application collection)
+Collection (Application),
+    Report ID (4),
+    Report Size (1),
+    Report Count (8),
+    Usage Page (Keyboard),          ; Keyboard/keypad (07h)
+    Usage Minimum (KB Leftcontrol), ; Keyboard left control (E0h, dynamic value)
+    Usage Maximum (KB Right GUI),   ; Keyboard right GUI (E7h, dynamic value)
+    Logical Minimum (0),
+    Logical Maximum (1),
+    Input (Variable),
+    Report Size (1),
+    Report Count (8),
+    Usage Page (Consumer),          ; Consumer (0Ch)
+    Usage (Play Pause),             ; Play/pause (CDh, one-shot control)
+    Usage (Scan Previous Track),    ; Scan previous track (B6h, one-shot control)
+    Usage (Scan Next Track),        ; Scan next track (B5h, one-shot control)
+    Usage (Rewind),                 ; Rewind (B4h, on/off control)
+    Usage (Fast Forward),           ; Fast forward (B3h, on/off control)
+    Usage (AC Home),                ; AC home (0223h, selector)
+    Usage (AC Back),                ; AC back (0224h, selector)
+    Usage (Menu),                   ; Menu (40h, on/off control)
+    Logical Minimum (0),
+    Logical Maximum (1),
+    Input (Variable),
+    Report Count (5),
+    Report Size (1),
+    Usage Page (LED),               ; LEDs (08h)
+    Usage Minimum (01h),
+    Usage Maximum (05h),
+    Output (Variable),
+    Report Count (1),
+    Report Size (3),
+    Output (Constant, Variable),
+    Report Count (6),
+    Report Size (8),
+    Logical Minimum (0),
+    Logical Maximum (255),
+    Usage Page (Keyboard),          ; Keyboard/keypad (07h)
+    Usage Minimum (None),           ; No event (00h, selector)
+    Usage Maximum (FFh),
+    Input,
+End Collection,
+Usage Page (Desktop),               ; Generic desktop controls (01h)
+Usage (Gamepad),                    ; Gamepad (05h, application collection)
+Collection (Application),
+    Report ID (2),
+    Usage Page (Button),            ; Button (09h)
+    Usage (01h),
+    Usage (02h),
+    Usage (09h),
+    Usage (04h),
+    Usage (05h),
+    Usage (0Ah),
+    Usage (07h),
+    Usage (08h),
+    Logical Minimum (0),
+    Logical Maximum (1),
+    Report Size (1),
+    Report Count (8),
+    Input (Variable),
+    Usage Page (Keyboard),          ; Keyboard/keypad (07h)
+    Usage (KB Power),               ; Keyboard Power (66h, selector)
+    Usage (KB Volume Up),           ; Keyboard Volume Up (80h, selector)
+    Usage Page (Button),            ; Button (09h)
+    Usage (0Ch),
+    Usage (10h),
+    Usage (0Dh),
+    Usage (0Eh),
+    Usage (0Fh),
+    Usage Page (Keyboard),          ; Keyboard/keypad (07h)
+    Usage (KB Volume Down),         ; Keyboard Volume Down (81h, selector)
+    Logical Minimum (0),
+    Logical Maximum (1),
+    Report Size (1),
+    Report Count (8),
+    Input (Variable),
+    Usage Page (Desktop),           ; Generic desktop controls (01h)
+    Logical Minimum (0),
+    Logical Maximum (7),
+    Physical Maximum (315),
+    Report Count (1),
+    Report Size (4),
+    Unit (Degrees),
+    Usage (Hat Switch),             ; Hat switch (39h, dynamic value)
+    Input (Variable, Null State),
+    Report Size (1),
+    Report Count (4),
+    Input (Constant),
+    Usage Page (Desktop),           ; Generic desktop controls (01h)
+    Logical Minimum (0),
+    Logical Maximum (255),
+    Usage (X),                      ; X (30h, dynamic value)
+    Usage (Y),                      ; Y (31h, dynamic value)
+    Usage (Z),                      ; Z (32h, dynamic value)
+    Usage (Rz),                     ; Rz (35h, dynamic value)
+    Report Count (4),
+    Report Size (8),
+    Input (Variable),
+    Usage Page (Simulation),        ; Simulation controls (02h)
+    Logical Minimum (0),
+    Logical Maximum (255),
+    Usage (C4h),
+    Usage (C5h),
+    Report Count (2),
+    Report Size (8),
+    Input (Variable),
+End Collection
