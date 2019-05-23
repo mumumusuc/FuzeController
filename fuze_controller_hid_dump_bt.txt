@@ -1,0 +1,44 @@
+root@yuki-virtual-machine:/home/yuki# cat /proc/bus/input/devices 
+
+I: Bus=0005 Vendor=12d1 Product=a560 Version=011b
+N: Name="Fuze game controller Keyboard"
+P: Phys=00:1a:7d:da:71:13
+S: Sysfs=/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0/hci0:71/0005:12D1:A560.0003/input/input8
+U: Uniq=4c:ff:12:c0:0c:75
+H: Handlers=sysrq kbd event5 leds 
+B: PROP=0
+B: EV=120013
+B: KEY=1000000010007 ff9f317ac1405fff febeffdfffefffff fffffffffffffffe
+B: MSC=10
+B: LED=1f
+
+I: Bus=0005 Vendor=12d1 Product=a560 Version=011b
+N: Name="Fuze game controller"
+P: Phys=00:1a:7d:da:71:13
+S: Sysfs=/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0/hci0:71/0005:12D1:A560.0003/input/input9
+U: Uniq=4c:ff:12:c0:0c:75
+H: Handlers=kbd event6 js0 
+B: PROP=0
+B: EV=10001b
+B: KEY=fbdb000000000000 0 0 1c000000000000 0
+B: ABS=30627
+B: MSC=10
+
+
+root@yuki-virtual-machine:/home/yuki# cat /sys/bus/hid/devices/0005\:12D1\:A560.0006/report_descriptor | hexdump
+0000000 0105 0609 01a1 0485 0175 0895 0705 e019
+0000010 e729 0015 0125 0281 0175 0895 0c05 cd09
+0000020 b609 b509 b409 b309 230a 0a02 0224 4009
+0000030 0015 0125 0281 0595 0175 0805 0119 0529
+0000040 0291 0195 0375 0391 0695 0875 0015 ff26
+0000050 0500 1907 2900 81ff c000 0105 0509 01a1
+0000060 0285 0905 0109 0209 0909 0409 0509 0a09
+0000070 0709 0809 0015 0125 0175 0895 0281 0705
+0000080 6609 8009 0905 0c09 1009 0d09 0e09 0f09
+0000090 0705 8109 0015 0125 0175 0895 0281 0105
+00000a0 0015 0725 3b46 9501 7501 6504 0914 8139
+00000b0 7542 9501 8104 0501 1501 2600 00ff 3009
+00000c0 3109 3209 3509 0495 0875 0281 0205 0015
+00000d0 ff26 0900 09c4 95c5 7502 8108 c002 0000
+00000df
+
