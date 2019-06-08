@@ -1,6 +1,13 @@
 # FuzeController
 战斧F1手柄驱动(Linux/Windows)
 
+### PID & VID
+1. USB:
+    PID = 0x181C , VID = 0x0079 
+
+2. Bluetooth:
+    PID = 0xA560 , VID = 0x12D1 
+
 ### HID协议
 1. 按键与摇杆数据(Input)
 
